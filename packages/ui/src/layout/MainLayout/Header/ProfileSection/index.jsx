@@ -1,9 +1,10 @@
 import { closeSnackbar as closeSnackbarAction, enqueueSnackbar as enqueueSnackbarAction, MENU_OPEN, REMOVE_DIRTY } from '@/store/actions'
-import { sanitizeChatflows } from '@/utils/genericHelper'
+import { exportData, stringify } from '@/utils/exportImport'
 import useNotifier from '@/utils/useNotifier'
 import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 // material-ui
 import {
     Avatar,
@@ -35,10 +36,11 @@ import { IconFileExport, IconFileUpload, IconInfoCircle, IconLogout, IconSetting
 import './index.css'
 
 //API
-import chatFlowsApi from '@/api/chatflows'
+import exportImportApi from '@/api/exportimport'
 
 // Hooks
 import useApi from '@/hooks/useApi'
+import { getErrorMessage } from '@/utils/errorHandler'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 // ==============================|| PROFILE MENU ||============================== //
@@ -90,7 +92,7 @@ const ProfileSection = ({ username, handleLogout }) => {
             }
         })
     }
-    const importChatflowsApi = useApi(chatFlowsApi.importChatflows)
+    const importAllApi = useApi(exportImportApi.importAll)
     const fileChange = (e) => {
         if (!e.target.files) return
 
@@ -101,16 +103,16 @@ const ProfileSection = ({ username, handleLogout }) => {
             if (!evt?.target?.result) {
                 return
             }
-            const chatflows = JSON.parse(evt.target.result)
-            importChatflowsApi.request(chatflows)
+            const body = JSON.parse(evt.target.result)
+            importAllApi.request(body)
         }
         reader.readAsText(file)
     }
 
-    const importChatflowsSuccess = () => {
+    const importAllSuccess = () => {
         dispatch({ type: REMOVE_DIRTY })
         enqueueSnackbar({
-            message: `Import chatflows successful`,
+            message: `Import All successful`,
             options: {
                 key: new Date().getTime() + Math.random(),
                 variant: 'success',
@@ -123,9 +125,9 @@ const ProfileSection = ({ username, handleLogout }) => {
         })
     }
     useEffect(() => {
-        if (importChatflowsApi.error) errorFailed(`Failed to import chatflows: ${importChatflowsApi.error.response.data.message}`)
-        if (importChatflowsApi.data) {
-            importChatflowsSuccess()
+        if (importAllApi.error) errorFailed(`Failed to import all: ${importAllApi.error.response.data.message}`)
+        if (importAllApi.data) {
+            importAllSuccess()
             // if current location is /chatflows, refresh the page
             if (location.pathname === '/chatflows') navigate(0)
             else {
@@ -135,16 +137,15 @@ const ProfileSection = ({ username, handleLogout }) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [importChatflowsApi.error, importChatflowsApi.data])
-    const importAllChatflows = () => {
+    }, [importAllApi.error, importAllApi.data])
+    const importAll = () => {
         inputRef.current.click()
     }
-    const getAllChatflowsApi = useApi(chatFlowsApi.getAllChatflows)
-
-    const exportChatflowsSuccess = () => {
+    const exportAllApi = useApi(exportImportApi.exportAll)
+    const exportAllApiSuccess = () => {
         dispatch({ type: REMOVE_DIRTY })
         enqueueSnackbar({
-            message: `Export chatflows successful`,
+            message: `Export All successful`,
             options: {
                 key: new Date().getTime() + Math.random(),
                 variant: 'success',
@@ -156,24 +157,24 @@ const ProfileSection = ({ username, handleLogout }) => {
             }
         })
     }
-
     useEffect(() => {
-        if (getAllChatflowsApi.error) errorFailed(`Failed to export Chatflows: ${getAllChatflowsApi.error.response.data.message}`)
-        if (getAllChatflowsApi.data) {
-            const sanitizedChatflows = sanitizeChatflows(getAllChatflowsApi.data)
-            const dataStr = JSON.stringify({ Chatflows: sanitizedChatflows }, null, 2)
-            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr)
+        if (exportAllApi.error) errorFailed(`Failed to export all: ${exportAllApi.error.response.data.message}`)
+        if (exportAllApi.data) {
+            try {
+                const dataStr = stringify(exportData(exportAllApi.data))
+                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr)
 
-            const exportFileDefaultName = 'AllChatflows.json'
-
-            const linkElement = document.createElement('a')
-            linkElement.setAttribute('href', dataUri)
-            linkElement.setAttribute('download', exportFileDefaultName)
-            linkElement.click()
-            exportChatflowsSuccess()
+                const linkElement = document.createElement('a')
+                linkElement.setAttribute('href', dataUri)
+                linkElement.setAttribute('download', exportAllApi.data.FileDefaultName)
+                linkElement.click()
+                exportAllApiSuccess()
+            } catch (error) {
+                errorFailed(`Failed to export all: ${getErrorMessage(error)}`)
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getAllChatflowsApi.error, getAllChatflowsApi.data])
+    }, [exportAllApi.error, exportAllApi.data])
 
     const prevOpen = useRef(open)
     useEffect(() => {
@@ -258,24 +259,24 @@ const ProfileSection = ({ username, handleLogout }) => {
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     onClick={() => {
-                                                        getAllChatflowsApi.request()
+                                                        exportAllApi.request()
                                                     }}
                                                 >
                                                     <ListItemIcon>
                                                         <IconFileExport stroke={1.5} size='1.3rem' />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant='body2'>Export Chatflows</Typography>} />
+                                                    <ListItemText primary={<Typography variant='body2'>Export All</Typography>} />
                                                 </ListItemButton>
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     onClick={() => {
-                                                        importAllChatflows()
+                                                        importAll()
                                                     }}
                                                 >
                                                     <ListItemIcon>
                                                         <IconFileUpload stroke={1.5} size='1.3rem' />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant='body2'>Import Chatflows</Typography>} />
+                                                    <ListItemText primary={<Typography variant='body2'>Import All</Typography>} />
                                                 </ListItemButton>
                                                 <input ref={inputRef} type='file' hidden onChange={fileChange} />
                                                 <ListItemButton

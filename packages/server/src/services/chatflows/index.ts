@@ -1,6 +1,6 @@
 import { removeFolderFromStorage } from 'flowise-components'
 import { StatusCodes } from 'http-status-codes'
-import { ChatflowType, IChatFlow, IReactFlowObject } from '../../Interface'
+import { ChatflowType, IReactFlowObject } from '../../Interface'
 import { ChatFlow } from '../../database/entities/ChatFlow'
 import { ChatMessage } from '../../database/entities/ChatMessage'
 import { ChatMessageFeedback } from '../../database/entities/ChatMessageFeedback'
@@ -103,12 +103,14 @@ const deleteChatflow = async (chatflowId: string): Promise<any> => {
     }
 }
 
-const getAllChatflows = async (type?: ChatflowType): Promise<IChatFlow[]> => {
+const getAllChatflows = async (type?: ChatflowType): Promise<ChatFlow[]> => {
     try {
         const appServer = getRunningExpressApp()
         const dbResponse = await appServer.AppDataSource.getRepository(ChatFlow).find()
         if (type === 'MULTIAGENT') {
             return dbResponse.filter((chatflow) => chatflow.type === type)
+        } else if (type === 'ALL') {
+            return dbResponse
         }
         return dbResponse.filter((chatflow) => chatflow.type === 'CHATFLOW' || !chatflow.type)
     } catch (error) {
@@ -234,7 +236,6 @@ const importChatflows = async (newChatflows: Partial<ChatFlow>[]): Promise<any> 
                 newChatflow.id = undefined
                 newChatflow.name += ' with new id'
             }
-            newChatflow.type = 'CHATFLOW'
             newChatflow.flowData = JSON.stringify(JSON.parse(flowData))
             return newChatflow
         })
