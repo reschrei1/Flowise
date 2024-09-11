@@ -3,6 +3,7 @@ import { getCredentialData } from './utils'
 import { type ClientOptions, OpenAIClient, toFile } from '@langchain/openai'
 import { AssemblyAI } from 'assemblyai'
 import { getFileFromStorage } from './storageUtils'
+import fetch, { Headers } from 'node-fetch'
 
 const SpeechToTextType = {
     OPENAI_WHISPER: 'openAIWhisper',
@@ -18,14 +19,45 @@ export const convertSpeechToText = async (upload: IFileUpload, speechToTextConfi
 
         switch (speechToTextConfig.name) {
             case SpeechToTextType.OPENAI_WHISPER: {
-                const openAIClientOptions: ClientOptions = {
-                    apiKey: credentialData.openAIApiKey
-                }
-                const openAIClient = new OpenAIClient(openAIClientOptions)
+                const url = 'https://aitfopenaiserv.openai.azure.com/openai/deployments/whisper/audio/translations?api-version=2024-06-01'
                 const file = await toFile(audio_file, upload.name)
+                const blob = await file.text()
+
+                const formdata = new FormData()
+                formdata.append('file', new Blob([blob]), 'file')
+                formdata.append('prompt', '<string>')
+                formdata.append('response_format', 'text')
+                formdata.append('temperature', '0')
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(formdata),
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            Accept: 'application/json',
+                            'api-key': 'f9900f5517134606b0448ef9835f13a5'
+                        }
+                    })
+                    const text = await response.text()
+                    return text
+                } catch (error) {
+                    console.error(error)
+                    // return ''
+                }
+
+                const azureOpenAIClientOptions: ClientOptions = {
+                    apiKey: credentialData.azureOpenAIApiKey,
+                    baseURL: 'https://aitfopenaiserv.openai.azure.com/openai/deployments/whisper/'
+                    // endpoint: credentialData.azureOpenAIApiInstanceName,
+                    // deployment: credentialData.azureOpenAIApiDeploymentName,
+                    // apiVersion: credentialData.azureOpenAIApiVersion
+                }
+                const openAIClient = new OpenAIClient(azureOpenAIClientOptions)
+                // const file = await toFile(audio_file, upload.name)
                 const openAITranscription = await openAIClient.audio.transcriptions.create({
                     file: file,
-                    model: 'whisper-1',
+                    model: 'whisper',
                     language: speechToTextConfig?.language,
                     temperature: speechToTextConfig?.temperature ? parseFloat(speechToTextConfig.temperature) : undefined,
                     prompt: speechToTextConfig?.prompt

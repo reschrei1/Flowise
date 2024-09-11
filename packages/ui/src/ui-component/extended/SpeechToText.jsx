@@ -44,7 +44,7 @@ const speechToTextProviders = {
                 label: 'Connect Credential',
                 name: 'credential',
                 type: 'credential',
-                credentialNames: ['openAIApi']
+                credentialNames: ['azureOpenAIApi']
             },
             {
                 label: 'Language',

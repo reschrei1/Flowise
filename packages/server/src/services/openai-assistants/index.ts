@@ -23,11 +23,24 @@ const getAllOpenaiAssistants = async (credentialId: string): Promise<any> => {
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+
+>>>>>>> 87d40c52 (added azure support)
         const retrievedAssistants = await openai.beta.assistants.list()
         const dbResponse = retrievedAssistants.data
         return dbResponse
@@ -51,12 +64,24 @@ const getSingleOpenaiAssistant = async (credentialId: string, assistantId: strin
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
 
+<<<<<<< HEAD
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+>>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.assistants.retrieve(assistantId)
         const resp = await openai.files.list()
         const existingFiles = resp.data ?? []
@@ -92,12 +117,24 @@ const uploadFilesToAssistant = async (credentialId: string, files: { filePath: s
     }
     // Decrpyt credentialData
     const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-    const openAIApiKey = decryptedCredentialData['openAIApiKey']
-    if (!openAIApiKey) {
-        throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+    const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+    const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+    const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+    const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+    if (!azureOpenAIApiKey) {
+        throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
     }
+    const openai = new AzureOpenAI({
+        apiKey: azureOpenAIApiKey,
+        apiVersion: azureOpenAIApiVersion,
+        endpoint: azureOpenAIApiInstanceName,
+        deployment: azureOpenAIApiDeploymentName
+    })
 
+<<<<<<< HEAD
     const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+>>>>>>> 87d40c52 (added azure support)
     const uploadedFiles = []
 
     for (const file of files) {

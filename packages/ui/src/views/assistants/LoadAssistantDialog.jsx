@@ -62,7 +62,7 @@ const LoadAssistantDialog = ({ show, dialogProps, onCancel, onAssistantSelected,
                 <Box sx={{ p: 2 }}>
                     <Stack sx={{ position: 'relative' }} direction='row'>
                         <Typography variant='overline'>
-                            OpenAI Credential
+                            Azure OpenAI Credential
                             <span style={{ color: 'red' }}>&nbsp;*</span>
                         </Typography>
                     </Stack>
@@ -73,7 +73,7 @@ const LoadAssistantDialog = ({ show, dialogProps, onCancel, onAssistantSelected,
                             label: 'Connect Credential',
                             name: 'credential',
                             type: 'credential',
-                            credentialNames: ['openAIApi']
+                            credentialNames: ['azureOpenAIApi']
                         }}
                         onSelect={(newValue) => {
                             setCredentialId(newValue)

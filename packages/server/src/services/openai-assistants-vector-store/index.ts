@@ -18,12 +18,24 @@ const getAssistantVectorStore = async (credentialId: string, vectorStoreId: stri
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.vectorStores.retrieve(vectorStoreId)
         return dbResponse
     } catch (error) {
@@ -45,12 +57,24 @@ const listAssistantVectorStore = async (credentialId: string) => {
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.vectorStores.list()
         return dbResponse.data
     } catch (error) {
@@ -72,12 +96,24 @@ const createAssistantVectorStore = async (credentialId: string, obj: OpenAI.Beta
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.vectorStores.create(obj)
         return dbResponse
     } catch (error) {
@@ -103,12 +139,24 @@ const updateAssistantVectorStore = async (
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.vectorStores.update(vectorStoreId, obj)
         const vectorStoreFiles = await openai.beta.vectorStores.files.list(vectorStoreId)
         if (vectorStoreFiles.data?.length) {
@@ -139,12 +187,24 @@ const deleteAssistantVectorStore = async (credentialId: string, vectorStoreId: s
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.vectorStores.del(vectorStoreId)
         return dbResponse
     } catch (error) {
@@ -170,12 +230,24 @@ const uploadFilesToAssistantVectorStore = async (
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const uploadedFiles = []
         for (const file of files) {
             const toFile = await OpenAI.toFile(fs.readFileSync(file.filePath), file.fileName)
@@ -222,12 +294,24 @@ const deleteFilesFromAssistantVectorStore = async (credentialId: string, vectorS
         }
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-        const openAIApiKey = decryptedCredentialData['openAIApiKey']
-        if (!openAIApiKey) {
-            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+        const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+        const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+        const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+        if (!azureOpenAIApiKey) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
+<<<<<<< HEAD
 
         const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+        const openai = new AzureOpenAI({
+            apiKey: azureOpenAIApiKey,
+            apiVersion: azureOpenAIApiVersion,
+            endpoint: azureOpenAIApiInstanceName,
+            deployment: azureOpenAIApiDeploymentName
+        })
+>>>>>>> 87d40c52 (added azure support)
         const deletedFileIds = []
         let count = 0
         for (const file of file_ids) {

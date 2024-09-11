@@ -27,11 +27,25 @@ const createAssistant = async (requestBody: any): Promise<Assistant> => {
 
             // Decrpyt credentialData
             const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-            const openAIApiKey = decryptedCredentialData['openAIApiKey']
-            if (!openAIApiKey) {
-                throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+            const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+            const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+            const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+            const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+            if (!azureOpenAIApiKey) {
+                throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
             }
+<<<<<<< HEAD
             const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+            const openai = new AzureOpenAI({
+                apiKey: azureOpenAIApiKey,
+                apiVersion: azureOpenAIApiVersion,
+                endpoint: azureOpenAIApiInstanceName,
+                deployment: azureOpenAIApiDeploymentName
+            })
+
+            // console.log(`AzureOpenAI openai.baseURL: ${openai.baseURL}`)
+>>>>>>> 87d40c52 (added azure support)
 
             // Prepare tools
             let tools = []
@@ -139,14 +153,25 @@ const deleteAssistant = async (assistantId: string, isDeleteBoth: any): Promise<
                 throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `Credential ${assistant.credential} not found`)
             }
 
-            // Decrpyt credentialData
             const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-            const openAIApiKey = decryptedCredentialData['openAIApiKey']
-            if (!openAIApiKey) {
-                throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+            const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+            const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+            const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+            const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+            if (!azureOpenAIApiKey) {
+                throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
             }
+<<<<<<< HEAD
 
             const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+            const openai = new AzureOpenAI({
+                apiKey: azureOpenAIApiKey,
+                apiVersion: azureOpenAIApiVersion,
+                endpoint: azureOpenAIApiInstanceName,
+                deployment: azureOpenAIApiDeploymentName
+            })
+>>>>>>> 87d40c52 (added azure support)
             const dbResponse = await appServer.AppDataSource.getRepository(Assistant).delete({ id: assistantId })
             if (isDeleteBoth) await openai.beta.assistants.del(assistantDetails.id)
             return dbResponse
@@ -214,14 +239,25 @@ const updateAssistant = async (assistantId: string, requestBody: any): Promise<A
                 throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `Credential ${body.credential} not found`)
             }
 
-            // Decrpyt credentialData
             const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
-            const openAIApiKey = decryptedCredentialData['openAIApiKey']
-            if (!openAIApiKey) {
-                throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `OpenAI ApiKey not found`)
+            const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
+            const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
+            const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
+            const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
+            if (!azureOpenAIApiKey) {
+                throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
             }
+<<<<<<< HEAD
 
             const openai = new OpenAI({ apiKey: openAIApiKey })
+=======
+            const openai = new AzureOpenAI({
+                apiKey: azureOpenAIApiKey,
+                apiVersion: azureOpenAIApiVersion,
+                endpoint: azureOpenAIApiInstanceName,
+                deployment: azureOpenAIApiDeploymentName
+            })
+>>>>>>> 87d40c52 (added azure support)
 
             let tools = []
             if (assistantDetails.tools) {

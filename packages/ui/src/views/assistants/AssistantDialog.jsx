@@ -696,7 +696,7 @@ const AssistantDialog = ({ show, dialogProps, onCancel, onConfirm, setError }) =
                                 label: 'Connect Credential',
                                 name: 'credential',
                                 type: 'credential',
-                                credentialNames: ['openAIApi']
+                                credentialNames: ['azureOpenAIApi']
                             }}
                             onSelect={(newValue) => setAssistantCredential(newValue)}
                         />
