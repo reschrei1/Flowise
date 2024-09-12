@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import OpenAI, { AzureOpenAI } from 'openai'
 import { StatusCodes } from 'http-status-codes'
 import { uniqWith, isEqual, cloneDeep } from 'lodash'
 import { getRunningExpressApp } from '../../utils/getRunningExpressApp'
@@ -34,9 +34,6 @@ const createAssistant = async (requestBody: any): Promise<Assistant> => {
             if (!azureOpenAIApiKey) {
                 throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
             }
-<<<<<<< HEAD
-            const openai = new OpenAI({ apiKey: openAIApiKey })
-=======
             const openai = new AzureOpenAI({
                 apiKey: azureOpenAIApiKey,
                 apiVersion: azureOpenAIApiVersion,
@@ -45,7 +42,6 @@ const createAssistant = async (requestBody: any): Promise<Assistant> => {
             })
 
             // console.log(`AzureOpenAI openai.baseURL: ${openai.baseURL}`)
->>>>>>> 87d40c52 (added azure support)
 
             // Prepare tools
             let tools = []
@@ -161,17 +157,12 @@ const deleteAssistant = async (assistantId: string, isDeleteBoth: any): Promise<
             if (!azureOpenAIApiKey) {
                 throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
             }
-<<<<<<< HEAD
-
-            const openai = new OpenAI({ apiKey: openAIApiKey })
-=======
             const openai = new AzureOpenAI({
                 apiKey: azureOpenAIApiKey,
                 apiVersion: azureOpenAIApiVersion,
                 endpoint: azureOpenAIApiInstanceName,
                 deployment: azureOpenAIApiDeploymentName
             })
->>>>>>> 87d40c52 (added azure support)
             const dbResponse = await appServer.AppDataSource.getRepository(Assistant).delete({ id: assistantId })
             if (isDeleteBoth) await openai.beta.assistants.del(assistantDetails.id)
             return dbResponse
@@ -247,17 +238,12 @@ const updateAssistant = async (assistantId: string, requestBody: any): Promise<A
             if (!azureOpenAIApiKey) {
                 throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
             }
-<<<<<<< HEAD
-
-            const openai = new OpenAI({ apiKey: openAIApiKey })
-=======
             const openai = new AzureOpenAI({
                 apiKey: azureOpenAIApiKey,
                 apiVersion: azureOpenAIApiVersion,
                 endpoint: azureOpenAIApiInstanceName,
                 deployment: azureOpenAIApiDeploymentName
             })
->>>>>>> 87d40c52 (added azure support)
 
             let tools = []
             if (assistantDetails.tools) {

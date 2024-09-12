@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import OpenAI, { AzureOpenAI } from 'openai'
 import fs from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import { decryptCredentialData } from '../../utils'
@@ -30,9 +30,6 @@ const getAllOpenaiAssistants = async (credentialId: string): Promise<any> => {
         if (!azureOpenAIApiKey) {
             throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `AzureOpenAI ApiKey not found`)
         }
-<<<<<<< HEAD
-        const openai = new OpenAI({ apiKey: openAIApiKey })
-=======
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
@@ -40,7 +37,6 @@ const getAllOpenaiAssistants = async (credentialId: string): Promise<any> => {
             deployment: azureOpenAIApiDeploymentName
         })
 
->>>>>>> 87d40c52 (added azure support)
         const retrievedAssistants = await openai.beta.assistants.list()
         const dbResponse = retrievedAssistants.data
         return dbResponse
@@ -78,10 +74,6 @@ const getSingleOpenaiAssistant = async (credentialId: string, assistantId: strin
             deployment: azureOpenAIApiDeploymentName
         })
 
-<<<<<<< HEAD
-        const openai = new OpenAI({ apiKey: openAIApiKey })
-=======
->>>>>>> 87d40c52 (added azure support)
         const dbResponse = await openai.beta.assistants.retrieve(assistantId)
         const resp = await openai.files.list()
         const existingFiles = resp.data ?? []
@@ -131,10 +123,6 @@ const uploadFilesToAssistant = async (credentialId: string, files: { filePath: s
         deployment: azureOpenAIApiDeploymentName
     })
 
-<<<<<<< HEAD
-    const openai = new OpenAI({ apiKey: openAIApiKey })
-=======
->>>>>>> 87d40c52 (added azure support)
     const uploadedFiles = []
 
     for (const file of files) {
