@@ -28,7 +28,6 @@ const createAssistant = async (requestBody: any): Promise<Assistant> => {
             // Decrpyt credentialData
             const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
             const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-            const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
             const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
             const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
             if (!azureOpenAIApiKey) {
@@ -37,7 +36,6 @@ const createAssistant = async (requestBody: any): Promise<Assistant> => {
             const openai = new AzureOpenAI({
                 apiKey: azureOpenAIApiKey,
                 apiVersion: azureOpenAIApiVersion,
-                endpoint: azureOpenAIApiInstanceName,
                 deployment: azureOpenAIApiDeploymentName
             })
 
@@ -151,7 +149,6 @@ const deleteAssistant = async (assistantId: string, isDeleteBoth: any): Promise<
 
             const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
             const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-            const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
             const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
             const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
             if (!azureOpenAIApiKey) {
@@ -160,7 +157,6 @@ const deleteAssistant = async (assistantId: string, isDeleteBoth: any): Promise<
             const openai = new AzureOpenAI({
                 apiKey: azureOpenAIApiKey,
                 apiVersion: azureOpenAIApiVersion,
-                endpoint: azureOpenAIApiInstanceName,
                 deployment: azureOpenAIApiDeploymentName
             })
             const dbResponse = await appServer.AppDataSource.getRepository(Assistant).delete({ id: assistantId })
@@ -232,7 +228,6 @@ const updateAssistant = async (assistantId: string, requestBody: any): Promise<A
 
             const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
             const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-            const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
             const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
             const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
             if (!azureOpenAIApiKey) {
@@ -241,7 +236,6 @@ const updateAssistant = async (assistantId: string, requestBody: any): Promise<A
             const openai = new AzureOpenAI({
                 apiKey: azureOpenAIApiKey,
                 apiVersion: azureOpenAIApiVersion,
-                endpoint: azureOpenAIApiInstanceName,
                 deployment: azureOpenAIApiDeploymentName
             })
 

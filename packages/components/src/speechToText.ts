@@ -21,10 +21,10 @@ export const convertSpeechToText = async (upload: IFileUpload, speechToTextConfi
             case SpeechToTextType.OPENAI_WHISPER: {
                 const file = await toFile(audio_file, upload.name)
 
-                const deployment = 'whisper'
-                const apiVersion = '2024-07-01-preview'
-                const endpoint = 'https://aitfopenaiserv.openai.azure.com/'
-                const apiKey = 'f9900f5517134606b0448ef9835f13a5'
+                const deployment = credentialData.azureOpenAIApiDeploymentName
+                const apiVersion = credentialData.azureOpenAIApiVersion
+                const endpoint = credentialData.azureOpenAIApiInstanceName
+                const apiKey = credentialData.azureOpenAIApiKey
 
                 const client = new AzureOpenAI({ apiKey, endpoint, deployment, apiVersion })
                 const openAITranscription = await client.audio.transcriptions.create({

@@ -149,7 +149,7 @@ class AzureOpenAIAssistant_Agents implements INode {
 
         const credentialData = await getCredentialData(assistant.credential ?? '', options)
         const azureOpenAIApiKey = getCredentialParam('azureOpenAIApiKey', credentialData, nodeData)
-        const azureOpenAIApiInstanceName = getCredentialParam('azureOpenAIApiInstanceName', credentialData, nodeData)
+        // const azureOpenAIApiInstanceName = getCredentialParam('azureOpenAIApiInstanceName', credentialData, nodeData)
         const azureOpenAIApiDeploymentName = getCredentialParam('azureOpenAIApiDeploymentName', credentialData, nodeData)
         const azureOpenAIApiVersion = getCredentialParam('azureOpenAIApiVersion', credentialData, nodeData)
         if (!azureOpenAIApiKey) {
@@ -160,7 +160,6 @@ class AzureOpenAIAssistant_Agents implements INode {
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
 

@@ -24,7 +24,6 @@ const getAllOpenaiAssistants = async (credentialId: string): Promise<any> => {
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -33,7 +32,6 @@ const getAllOpenaiAssistants = async (credentialId: string): Promise<any> => {
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
 
@@ -61,7 +59,6 @@ const getSingleOpenaiAssistant = async (credentialId: string, assistantId: strin
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -70,7 +67,6 @@ const getSingleOpenaiAssistant = async (credentialId: string, assistantId: strin
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
 
@@ -110,7 +106,6 @@ const uploadFilesToAssistant = async (credentialId: string, files: { filePath: s
     // Decrpyt credentialData
     const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
     const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-    const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
     const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
     const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
     if (!azureOpenAIApiKey) {
@@ -119,7 +114,6 @@ const uploadFilesToAssistant = async (credentialId: string, files: { filePath: s
     const openai = new AzureOpenAI({
         apiKey: azureOpenAIApiKey,
         apiVersion: azureOpenAIApiVersion,
-        endpoint: azureOpenAIApiInstanceName,
         deployment: azureOpenAIApiDeploymentName
     })
 

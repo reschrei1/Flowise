@@ -19,7 +19,6 @@ const getAssistantVectorStore = async (credentialId: string, vectorStoreId: stri
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -28,7 +27,6 @@ const getAssistantVectorStore = async (credentialId: string, vectorStoreId: stri
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const dbResponse = await openai.beta.vectorStores.retrieve(vectorStoreId)
@@ -53,7 +51,6 @@ const listAssistantVectorStore = async (credentialId: string) => {
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -62,7 +59,6 @@ const listAssistantVectorStore = async (credentialId: string) => {
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const dbResponse = await openai.beta.vectorStores.list()
@@ -87,7 +83,6 @@ const createAssistantVectorStore = async (credentialId: string, obj: OpenAI.Beta
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -96,7 +91,6 @@ const createAssistantVectorStore = async (credentialId: string, obj: OpenAI.Beta
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const dbResponse = await openai.beta.vectorStores.create(obj)
@@ -125,7 +119,6 @@ const updateAssistantVectorStore = async (
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -134,7 +127,6 @@ const updateAssistantVectorStore = async (
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const dbResponse = await openai.beta.vectorStores.update(vectorStoreId, obj)
@@ -168,7 +160,6 @@ const deleteAssistantVectorStore = async (credentialId: string, vectorStoreId: s
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -177,7 +168,6 @@ const deleteAssistantVectorStore = async (credentialId: string, vectorStoreId: s
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const dbResponse = await openai.beta.vectorStores.del(vectorStoreId)
@@ -206,7 +196,6 @@ const uploadFilesToAssistantVectorStore = async (
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -215,7 +204,6 @@ const uploadFilesToAssistantVectorStore = async (
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const uploadedFiles = []
@@ -265,7 +253,6 @@ const deleteFilesFromAssistantVectorStore = async (credentialId: string, vectorS
         // Decrpyt credentialData
         const decryptedCredentialData = await decryptCredentialData(credential.encryptedData)
         const azureOpenAIApiKey = decryptedCredentialData['azureOpenAIApiKey']
-        const azureOpenAIApiInstanceName = decryptedCredentialData['azureOpenAIApiInstanceName']
         const azureOpenAIApiDeploymentName = decryptedCredentialData['azureOpenAIApiDeploymentName']
         const azureOpenAIApiVersion = decryptedCredentialData['azureOpenAIApiVersion']
         if (!azureOpenAIApiKey) {
@@ -274,7 +261,6 @@ const deleteFilesFromAssistantVectorStore = async (credentialId: string, vectorS
         const openai = new AzureOpenAI({
             apiKey: azureOpenAIApiKey,
             apiVersion: azureOpenAIApiVersion,
-            endpoint: azureOpenAIApiInstanceName,
             deployment: azureOpenAIApiDeploymentName
         })
         const deletedFileIds = []
