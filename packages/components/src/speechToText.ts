@@ -23,10 +23,10 @@ export const convertSpeechToText = async (upload: IFileUpload, speechToTextConfi
 
                 const deployment = credentialData.azureOpenAIApiDeploymentName
                 const apiVersion = credentialData.azureOpenAIApiVersion
-                const endpoint = credentialData.azureOpenAIApiInstanceName
+                // const endpoint = credentialData.azureOpenAIApiInstanceName
                 const apiKey = credentialData.azureOpenAIApiKey
 
-                const client = new AzureOpenAI({ apiKey, endpoint, deployment, apiVersion })
+                const client = new AzureOpenAI({ apiKey, deployment, apiVersion })
                 const openAITranscription = await client.audio.transcriptions.create({
                     model: '',
                     file: file,

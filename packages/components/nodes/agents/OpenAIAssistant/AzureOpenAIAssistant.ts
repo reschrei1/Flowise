@@ -800,8 +800,27 @@ const downloadImg = async (openai: AzureOpenAI, fileId: string, fileName: string
     return image_data_buffer
 }
 
-const downloadFile = async (openAIApiKey: string, fileObj: any, fileName: string, ...paths: string[]) => {
+const downloadFile = async (openai: AzureOpenAI, fileObj: any, fileName: string, ...paths: string[]) => {
     try {
+        const response = await openai.files.content(fileObj.id)
+
+        // Extract the binary data from the Response object
+        const data = await response.arrayBuffer()
+
+        // Convert the binary data to a Buffer
+        const data_buffer = Buffer.from(data)
+        const mime = 'application/octet-stream'
+
+        return await addSingleFileToStorage(mime, data_buffer, fileName, ...paths)
+    } catch (error) {
+        // console.error('Error downloading or writing the file:', error)
+        return ''
+    }
+}
+
+const downloadFile11 = async (openAIApiKey: string, fileObj: any, fileName: string, ...paths: string[]) => {
+    try {
+        // https://aitfopenaiserv.openai.azure.com/openai/files/assistant-KOuxGJLJo0piINxxVR4q7O3j/content?api-version=2024-07-01-preview
         const response = await fetch(`https://api.openai.com/v1/files/${fileObj.id}/content`, {
             method: 'GET',
             headers: { Accept: '*/*', Authorization: `Bearer ${openAIApiKey}` }
